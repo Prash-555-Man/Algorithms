@@ -82,8 +82,19 @@ void timSort(int arr[], int n) {
 
 // Main function to demonstrate TimSort
 int main() {
-    int arr[] = {5, 21, 7, 23, 19, 10, 14, 3, 27, 8, 16};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    int n, i;
+
+    // Input the number of elements
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+    
+    int arr[n];
+
+    // Input array elements
+    printf("Enter the elements of the array:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
 
     printf("Original array:\n");
     display(arr, n);
