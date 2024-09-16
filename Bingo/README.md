@@ -1,132 +1,91 @@
-# Bingo Sort Algorithm
-
-Bingo Sort is a sorting algorithm that repeatedly places the smallest unsorted value (like drawing numbers in a bingo game) in its correct position until the array is sorted.
+# Bingo Sort in C
 
 ## Overview
 
-Bingo Sort works by:
-1. Finding the smallest unsorted element in the array.
-2. Placing all instances of this element in their correct position.
-3. Repeating the process for the next smallest element until the array is sorted.
+Bingo Sort is a simple sorting algorithm that works by repeatedly finding the smallest unsorted element (referred to as "bingo") and placing it in its correct position. The process is repeated until the entire array is sorted. This algorithm is similar to Selection Sort but focuses on handling multiple identical values efficiently.
 
-## Code Explanation
+This implementation of Bingo Sort in C includes detailed `printf` statements and a `display` function to show the progress of the sorting algorithm step by step.
 
-### `display`
+## Features
 
-```c
-void display(int arr[], int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-```
+- Finds the smallest and largest element in the array initially.
+- Repeatedly places the smallest (bingo) element in its correct position.
+- Handles multiple identical values efficiently.
+- Displays the array after every significant operation.
 
-- **Purpose**: Prints the elements of the array.
-- **Parameters**:
-  - `arr[]`: The array to be displayed.
-  - `size`: The number of elements in the array.
+## Algorithm Steps
 
-### `bingoSort`
-
-```c
-void bingoSort(int arr[], int size) {
-    int bingo = arr[0];
-    int largest = arr[0];
-    for (int i = 1; i < size; i++) {
-        if (arr[i] < bingo) {
-            bingo = arr[i];
-        }
-        if (arr[i] > largest) {
-            largest = arr[i];
-        }
-    }
-
-    int nextBingo = largest;
-    int nextPos = 0;
-
-    while (bingo < nextBingo) {
-        int startPos = nextPos;
-        for (int i = startPos; i < size; i++) {
-            if (arr[i] == bingo) {
-                int temp = arr[i];
-                arr[i] = arr[nextPos];
-                arr[nextPos] = temp;
-                nextPos++;
-            } else if (arr[i] < nextBingo) {
-                nextBingo = arr[i];
-            }
-        }
-        bingo = nextBingo;
-        nextBingo = largest;
-
-        printf("Array after processing %d:\n", bingo);
-        display(arr, size);
-    }
-
-    printf("Final sorted array:\n");
-    display(arr, size);
-}
-```
-
-- **Purpose**: Sorts the array using the Bingo Sort algorithm.
-- **Parameters**:
-  - `arr[]`: The array to be sorted.
-  - `size`: The number of elements in the array.
-
-### `main`
-
-```c
-int main() {
-    int arr[] = {34, 12, 56, 12, 78, 5, 12};
-    int size = sizeof(arr) / sizeof(arr[0]);
-
-    printf("Original array:\n");
-    display(arr, size);
-
-    bingoSort(arr, size);
-
-    return 0;
-}
-```
-
-- **Purpose**: Demonstrates the usage of the `bingoSort` function.
-- **Steps**:
-  - Define an array with sample data.
-  - Print the original array.
-  - Call `bingoSort` to sort the array.
-  - Print the sorted array.
-
-## Compilation and Execution
-
-1. **Compile the Code**:
-   ```bash
-   gcc -o bingo_sort bingo_sort.c
-   ```
-
-2. **Run the Executable**:
-   ```bash
-   ./bingo_sort
-   ```
+1. **Find the Minimum and Maximum Values**: Identify the smallest (bingo) and largest values in the array.
+2. **Sort the Array**: For each `bingo`, the algorithm places all occurrences of it in their correct positions, and then updates `nextBingo` to the next smallest element.
+3. **Repeat Until Sorted**: This process is repeated until all elements are sorted.
 
 ## Example Output
+
+For an input array: `[34, 12, 56, 12, 78, 5, 12]`
+
+The output will show the progress of the array being sorted after each pass:
 
 ```
 Original array:
 34 12 56 12 78 5 12 
 
 Array after processing 5:
-5 12 56 34 78 12 12 
-...
+5 12 56 12 78 34 12 
+
+Array after processing 12:
+5 12 12 12 78 34 56 
+
+Array after processing 34:
+5 12 12 12 34 78 56 
+
+Array after processing 56:
+5 12 12 12 34 56 78 
+
 Final sorted array:
-5 12 12 12 34 56 78
+5 12 12 12 34 56 78 
 ```
 
-## Notes
+## How to Run
 
-- Bingo Sort is not efficient for large arrays due to its high time complexity compared to other sorting algorithms.
-- The code includes `printf` statements to visualize each step of the sorting process.
+1. **Clone or Download** the repository.
+2. Compile the code using a C compiler. For example, with GCC:
+   ```bash
+   gcc -o bingo_sort bingo_sort.c
+   ```
+3. Run the compiled program:
+   ```bash
+   ./bingo_sort
+   ```
+
+## Code Explanation
+
+### `bingoSort` Function
+
+- **Initialization**: The algorithm starts by finding the smallest and largest values in the array.
+- **Sorting Loop**: 
+  - The smallest value (`bingo`) is identified, and all occurrences of it are moved to their correct positions in the array.
+  - After placing `bingo`, the next smallest value (`nextBingo`) is found, and the process repeats.
+- **Array Display**: After each major operation, the array is printed to show the sorting progress.
+
+### `display` Function
+
+A helper function to print the contents of the array after each sorting step.
+
+### `main` Function
+
+The main function initializes an array, calls the `bingoSort` function, and prints the array before and after sorting.
+
+## How It Works
+
+1. **Input the Array**: The user provides an array of integers to be sorted.
+2. **Sorting Progress**: The algorithm works by continuously identifying the smallest unsorted element and swapping it to its correct position, printing the array at each step.
+3. **Final Output**: Once sorted, the array is displayed in ascending order.
+
+## Complexity
+
+- **Time Complexity**: O(n^2) in the worst case, similar to Selection Sort.
+- **Space Complexity**: O(1) because it sorts the array in place.
 
 ## License
 
-This code is provided as-is under the MIT License. See the LICENSE file for details.
+This project is open source and available under the [MIT License](LICENSE).
